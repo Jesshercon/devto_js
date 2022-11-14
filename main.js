@@ -7,11 +7,13 @@ const fireBaseDB = "https://todo-list-ec668-default-rtdb.firebaseio.com/";
 const post = {
   title: "Cafe con pan",
   description: "skdjghfkrsfjsdbchjdkgschbsdkhg",
+  date: "2022/11/14",
 };
 
 const post1 = {
   title: "Cafe con leche",
   description: "dfgfdgd",
+  date: "2022/11/01",
 };
 
 const createPost = (post) => {
@@ -79,3 +81,9 @@ const getAllPosts = () => {
 updatePost("-NGmn-xmrY2GbRnG4wQk", post1);
 let allPosts = getAllPosts();
 console.log("all posts: ", allPosts);
+
+//FUNCIONES DE FILTRADO
+
+const filterByDate = () => {};
+
+const filterByTitle = () => {};
