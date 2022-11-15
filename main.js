@@ -119,7 +119,6 @@ const main = async () => {
   };
 
   // Funcion de filtardo de fechas
-
   const filterByDate = (timePeriod) => {
     const now = new Date(Date.now());
     let oldestDate = 0;
