@@ -6,17 +6,6 @@
 
 const fireBaseDB = "https://todo-list-ec668-default-rtdb.firebaseio.com/";
 
-const post = {
-  title: "Cafe con pan",
-  description: "skdjghfkrsfjsdbchjdkgschbsdkhg",
-  date: "2022/11/14",
-};
-
-const post1 = {
-  title: "Cafe con leche",
-  description: "dfgfdgd",
-  date: "2022/11/01",
-};
 
 const createPost = (post) => {
   // Se agraga la fehca para poder hacer el filtrado más adelante
@@ -89,17 +78,22 @@ const getAllPosts = async () => {
 
 //Creating 20 posts + rating
 
-// const createFakePosts = () => {
-//   for (let index = 1; index <= 20; index++) {
-//     createPost({
-//       title: "Post" + index,
-//       description:
-//         " Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit veniam fugiat consequatur sapiente deleniti aperiam labore provident at nobis dolorum veritatis, magnam nostrum iusto consectetur et excepturi rem nulla sed.",
-//       rating: String(Math.floor(Math.random() * 5)),
-//     });
-//   }
-// };
+const createFakePosts = () => {
+  for (let index = 1; index <= 20; index++) {
+    const haceCuanto = Math.floor(Math.random() * 160000000000)
+    console.log(haceCuanto)
+    const tempCreationDate = new Date(Date.now() - haceCuanto)
+    createPost({
+      title: "Post" + index,
+      description:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit veniam fugiat consequatur sapiente deleniti aperiam labore provident at nobis dolorum veritatis, magnam nostrum iusto consectetur et excepturi rem nulla sed.",
+      rating: String(Math.floor(Math.random() * 5)),
+      creationDate: tempCreationDate,
+    });
+  }
+};
 
+//createFakePosts()
 //-- Functions for creating the HTML
 const createdoc = (title, description, creationDate) => {
 
@@ -109,14 +103,15 @@ const createdoc = (title, description, creationDate) => {
   const userImage = "https://i.pravatar.cc/90?image=50"
   const userName = "IroncladDev"
   const postCreationDate = creationDate
+  const postImage = "https://res.cloudinary.com/practicaldev/image/fetch/s--T9V-4Pl3--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cc1iscwbl7v1o0ggbkfe.png";
+
 
   const article = document.createElement("article");
-  article.classList.add("card", "justify-content-center");
+  article.classList.add("card", "article", "justify-content-center", "article__container-second", "mt-2");
   article.setAttribute("onclick", "window.location.href='./post.html'")
 
   const img = document.createElement("img");
-  img.src =
-    "https://res.cloudinary.com/practicaldev/image/fetch/s--T9V-4Pl3--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cc1iscwbl7v1o0ggbkfe.png";
+  img.src = postImage;
   img.classList.add("card-img-top");
   article.appendChild(img);
 
@@ -230,10 +225,29 @@ const createdoc = (title, description, creationDate) => {
   divCardInfo.appendChild(postFooter)
   divCardBody.appendChild(divCardInfo)
   article.appendChild(divCardBody)
-  console.log('article: ', article)
+  //console.log('article: ', article)
 
   document.getElementById("prueba").appendChild(article);
 };
+
+  // Funcion de filtardo de fechas
+  const filterByDate = (timePeriod, posts) => {
+    const now = new Date(Date.now());
+    let oldestDate = 0;
+    if (timePeriod === "ligaSemana") {
+      oldestDate = now.setDate(now.getDate() - 7);
+    } else if (timePeriod === "ligaMes") {
+      oldestDate = now.setMonth(now.getMonth() - 1);
+    } else if (timePeriod === "ligaAño") {
+      oldestDate = now.setFullYear(now.getFullYear() - 1);
+    } else {
+      oldestDate = 0
+    }
+
+    return (filteredPosts = posts.filter(
+      (post) => post.creationDate > oldestDate
+    ));
+  };
 
 //Main function
 
@@ -257,22 +271,54 @@ const main = async () => {
     }
   };
 
-  // Funcion de filtardo de fechas
-  const filterByDate = (timePeriod) => {
-    const now = new Date(Date.now());
-    let oldestDate = 0;
-    if (timePeriod === "semana") {
-      oldestDate = now.setDate(now.getDate() - 7);
-    } else if (timePeriod === "mes") {
-      oldestDate = now.setMonth(now.getMonth() - 1);
-    } else if (timePeriod === "año") {
-      oldestDate = now.setFullYear(now.getFullYear() - 1);
-    }
+  // Filtros para temoralidad, semana, mes, año e infinito
+  document.getElementById("ligaSemana").addEventListener("click", () => {
+    console.log('semana')
+    // Borramos todas las tarjetas que se muestran
+    document.getElementById("prueba").innerHTML = ""
+      // Filtramos por fecha
+    const filteredPosts = filterByDate('ligaSemana', allPosts)
+      // Creamos nuevas tarjetas con los array filt
+    filteredPosts.forEach((post) => {
+      createdoc(post.title, post.description, post.creationDate)
+    })
+  })
 
-    return (filteredPosts = allPosts.filter(
-      (post) => post.creationDate > oldestDate
-    ));
-  };
+  document.getElementById("ligaMes").addEventListener("click", () => {
+    console.log('mes')
+    // Borramos todas las tarjetas que se muestran
+    document.getElementById("prueba").innerHTML = ""
+      // Filtramos por fecha
+    const filteredPosts = filterByDate('ligaMes', allPosts)
+      // Creamos nuevas tarjetas con los array filt
+    filteredPosts.forEach((post) => {
+      createdoc(post.title, post.description, post.creationDate)
+    })
+  })
+
+  document.getElementById("ligaAño").addEventListener("click", () => {
+    console.log('año')
+    // Borramos todas las tarjetas que se muestran
+    document.getElementById("prueba").innerHTML = ""
+      // Filtramos por fecha
+    const filteredPosts = filterByDate('ligaAño', allPosts)
+      // Creamos nuevas tarjetas con los array filt
+    filteredPosts.forEach((post) => {
+      createdoc(post.title, post.description, post.creationDate)
+    })
+  })
+
+  document.getElementById("ligaInfinito").addEventListener("click", () => {
+    console.log('infinito')
+    // Borramos todas las tarjetas que se muestran
+    document.getElementById("prueba").innerHTML = ""
+      // Filtramos por fecha
+    const filteredPosts = filterByDate('infinito', allPosts)
+      // Creamos nuevas tarjetas con los array filt
+    filteredPosts.forEach((post) => {
+      createdoc(post.title, post.description, post.creationDate)
+    })
+  })
 
   searchButton.addEventListener("click", () => {
     const searchTerm = searchInput.value;
