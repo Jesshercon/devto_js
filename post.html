@@ -91,7 +91,7 @@
                   <div class="text-xs text-gray">Posted on Sep 10</div>
                 </div>
               </div>
-              <h1 class="card-text fw-bold"> The greatest skill issue of all time: building my first typescript application </h1>
+              <h1 id="postTitle" class="card-text fw-bold"> The greatest skill issue of all time: building my first typescript application </h1>
               <div class="card__tags card__tags-links text">
                 <a class="text-decoration-none link-dark p-1" href="">#javascript</a>
                 <a class="text-decoration-none link-dark p-1" href="">#webdev</a>
@@ -99,7 +99,7 @@
                 <a class="text-decoration-none link-dark p-1" href="">#programming</a>
               </div>
               <!-- ARTICLE CONTENT TEXT -->
-              <div class="mt-5 fs-5 article-content">
+              <div id="postContent" class="mt-5 fs-5 article-content">
                 <p> I recently just got a job at <a href="https://replit.com">https://replit.com</a> in which I had to learn <strong>Typescript</strong> and <strong>Supabase</strong> for an upcoming project. I decided to build a personal project with the two new technologies I was going to learn, but <strong>little did I know</strong> that it would hit me in the face <strong>really</strong> hard. </p>
                 <p>
                   <a href="https://replit.com/@masfrost/social-diffusion?v=1">This project</a> inspired me a lot and I wanted to make something similar, so I did a bit of brainstorming on some things that could be improved, and went <strong>head-on</strong> into the development process.
@@ -449,5 +449,19 @@
     </div>
   </div>
 </div>
+<script src="./crud.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search)
+getPost(params.get("postId"), (post)=>{
+console.log(post);
+
+const postTitle= document.getElementById("postTitle");
+postTitle.innerText=post.title;
+
+const postContent=document.getElementById("postContent");
+postContent.innerHTML=post.description;
+});
+// console.log(getPost(params.get("postId")));
+</script>
 </body>
 </html>

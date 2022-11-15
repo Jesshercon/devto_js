@@ -2,9 +2,10 @@
  * Funciones CRUD para Jex y Vanne: Obtener detalle de un post (READ) y eliminar un post (DELETE)
  */
 
-//https://devto-5a011-default-rtdb.firebaseio.com/
 
-const fireBaseDB = "https://todo-list-ec668-default-rtdb.firebaseio.com/";
+//https://todo-list-ec668-default-rtdb.firebaseio.com/
+
+const fireBaseDB = "https://devto-5a011-default-rtdb.firebaseio.com/";
 
 const post = {
   title: "Cafe con pan",
@@ -101,18 +102,18 @@ const getAllPosts = async () => {
 // };
 
 //-- Functions for creating the HTML
-const createdoc = (title, description, creationDate) => {
+const createdoc = (post) => {
 
-  const nombre = title;
-  const texto = description;
+  const nombre = post.title;
+  const texto = post.description;
   const hashtags = ["javascript", "react", "webdev", "opensource"] 
   const userImage = "https://i.pravatar.cc/90?image=50"
   const userName = "IroncladDev"
-  const postCreationDate = creationDate
+  const postCreationDate = post.creationDate
 
   const article = document.createElement("article");
   article.classList.add("card", "justify-content-center");
-  article.setAttribute("onclick", "window.location.href='./post.html'")
+  article.setAttribute("onclick", `window.location.href='./post.html?postId=${post.id}'`)
 
   const img = document.createElement("img");
   img.src =
@@ -197,7 +198,7 @@ const createdoc = (title, description, creationDate) => {
 
   //article.addEventListener("click", () => (window.location = "./post.html"));
 
-  const post = `    
+  const postContent = `    
       <div class="comment__footer-icon">
       <button class="btn btn-light btn-sm mr-1 reaction-like inline-flex">
       <svg class="crayons-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -226,7 +227,7 @@ const createdoc = (title, description, creationDate) => {
       </div>`;
 
 
-  postFooter.innerHTML = post
+  postFooter.innerHTML = postContent
   divCardInfo.appendChild(postFooter)
   divCardBody.appendChild(divCardInfo)
   article.appendChild(divCardBody)
@@ -242,7 +243,7 @@ const main = async () => {
   allPosts = await getAllPosts();
 
   allPosts.forEach((post) => {
-    createdoc(post.title, post.description, post.creationDate);
+    createdoc(post);
   });
 
   //Search posts
