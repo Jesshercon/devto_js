@@ -79,25 +79,7 @@ const getAllPosts = async () => {
   return posts;
 };
 
-// Funcion de filtardo de fechas
 
-const filtrarFechas = (timePeriod, posts) => {
-  console.log("inicio");
-  const now = new Date(Date.now());
-  let oldestDate = 0;
-  if (timePeriod === "semana") {
-    oldestDate = now.setDate(now.getDate() - 7);
-  } else if (timePeriod === "mes") {
-    oldestDate = now.setMonth(now.getMonth() - 1);
-  } else if (timePeriod === "año") {
-    oldestDate = now.setFullYear(now.getFullYear() - 1);
-  }
-
-  const filteredPosts = posts.filter((post) => post.creationDate > oldestDate);
-  console.log(filteredPosts);
-
-  return filteredPosts;
-};
 
 //updatePost("-NGmn-xmrY2GbRnG4wQk", post1);
 // let allPosts = getAllPosts();
@@ -134,6 +116,21 @@ const main = async () => {
         return false;
       });
     }
+  };
+
+  // Funcion de filtardo de fechas
+  const filterByDate = (timePeriod) => {
+    const now = new Date(Date.now());
+    let oldestDate = 0;
+    if (timePeriod === "semana") {
+      oldestDate = now.setDate(now.getDate() - 7);
+    } else if (timePeriod === "mes") {
+      oldestDate = now.setMonth(now.getMonth() - 1);
+    } else if (timePeriod === "año") {
+      oldestDate = now.setFullYear(now.getFullYear() - 1);
+    }
+
+    return filteredPosts = allPosts.filter((post) => post.creationDate > oldestDate);
   };
 
   searchButton.addEventListener("click", () => {
