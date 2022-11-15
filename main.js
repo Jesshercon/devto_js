@@ -281,3 +281,10 @@ const main = async () => {
 };
 
 main();
+
+//Create post
+
+createPostButton.addEventListener('click', ()=>{
+  window.location.href="/createpost.html";
+
+})
