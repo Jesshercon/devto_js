@@ -311,3 +311,12 @@ main();
 //postsContainer
 //createCardForPost();
 //createdoc();
+
+
+//Create post
+
+createPostButton.addEventListener('click', ()=>{
+  window.location.href="/createpost.html";
+
+})
+
