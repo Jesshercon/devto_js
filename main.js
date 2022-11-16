@@ -2,9 +2,10 @@
  * Funciones CRUD para Jex y Vanne: Obtener detalle de un post (READ) y eliminar un post (DELETE)
  */
 
-//https://devto-5a011-default-rtdb.firebaseio.com/
 
-const fireBaseDB = "https://todo-list-ec668-default-rtdb.firebaseio.com/";
+//https://todo-list-ec668-default-rtdb.firebaseio.com/
+
+const fireBaseDB = "https://devto-5a011-default-rtdb.firebaseio.com/";
 
 
 const createPost = (post) => {
@@ -95,20 +96,21 @@ const createFakePosts = () => {
 
 //createFakePosts()
 //-- Functions for creating the HTML
-const createdoc = (title, description, creationDate) => {
+const createdoc = (post) => {
 
-  const nombre = title;
-  const texto = description;
+  const nombre = post.title;
+  const texto = post.description;
   const hashtags = ["javascript", "react", "webdev", "opensource"] 
   const userImage = "https://i.pravatar.cc/90?image=50"
   const userName = "IroncladDev"
-  const postCreationDate = creationDate
+  const postCreationDate = post.creationDate
   const postImage = "https://res.cloudinary.com/practicaldev/image/fetch/s--T9V-4Pl3--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cc1iscwbl7v1o0ggbkfe.png";
 
 
   const article = document.createElement("article");
   article.classList.add("card", "article", "justify-content-center", "article__container-second", "mt-2");
   article.setAttribute("onclick", "window.location.href='./post.html'")
+
 
   const img = document.createElement("img");
   img.src = postImage;
@@ -192,7 +194,7 @@ const createdoc = (title, description, creationDate) => {
 
   //article.addEventListener("click", () => (window.location = "./post.html"));
 
-  const post = `    
+  const postContent = `    
       <div class="comment__footer-icon">
       <button class="btn btn-light btn-sm mr-1 reaction-like inline-flex">
       <svg class="crayons-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -221,7 +223,7 @@ const createdoc = (title, description, creationDate) => {
       </div>`;
 
 
-  postFooter.innerHTML = post
+  postFooter.innerHTML = postContent
   divCardInfo.appendChild(postFooter)
   divCardBody.appendChild(divCardInfo)
   article.appendChild(divCardBody)
@@ -256,7 +258,7 @@ const main = async () => {
   allPosts = await getAllPosts();
 
   allPosts.forEach((post) => {
-    createdoc(post.title, post.description, post.creationDate);
+    createdoc(post);
   });
 
   //Search posts
@@ -280,7 +282,7 @@ const main = async () => {
     const filteredPosts = filterByDate('ligaSemana', allPosts)
       // Creamos nuevas tarjetas con los array filt
     filteredPosts.forEach((post) => {
-      createdoc(post.title, post.description, post.creationDate)
+      createdoc(post)
     })
   })
 
@@ -292,7 +294,7 @@ const main = async () => {
     const filteredPosts = filterByDate('ligaMes', allPosts)
       // Creamos nuevas tarjetas con los array filt
     filteredPosts.forEach((post) => {
-      createdoc(post.title, post.description, post.creationDate)
+      createdoc(post)
     })
   })
 
@@ -304,7 +306,7 @@ const main = async () => {
     const filteredPosts = filterByDate('ligaAño', allPosts)
       // Creamos nuevas tarjetas con los array filt
     filteredPosts.forEach((post) => {
-      createdoc(post.title, post.description, post.creationDate)
+      createdoc(post)
     })
   })
 
@@ -316,7 +318,7 @@ const main = async () => {
     const filteredPosts = filterByDate('infinito', allPosts)
       // Creamos nuevas tarjetas con los array filt
     filteredPosts.forEach((post) => {
-      createdoc(post.title, post.description, post.creationDate)
+      createdoc(post)
     })
   })
 
@@ -327,3 +329,10 @@ const main = async () => {
 };
 
 main();
+
+//Create post
+
+createPostButton.addEventListener('click', ()=>{
+  window.location.href="/createpost.html";
+
+})

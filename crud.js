@@ -34,15 +34,15 @@ const createPost = (post, sentCallback) => {
     }) 
 };
 
-const getPost = (id) => {
+const getPost = (id, loadedCallback) => {
   const url = `${fireBaseDB}articles/${id}.json`;
   fetch(url, {
     method: "GET",
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      return data;
+      
+      loadedCallback(data);
     });
 };
 
