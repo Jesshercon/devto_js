@@ -229,7 +229,7 @@ const createdoc = (post) => {
   article.appendChild(divCardBody)
   //console.log('article: ', article)
 
-  document.getElementById("prueba").appendChild(article);
+  document.getElementById("prueba").prepend(article);
 };
 
   // Funcion de filtardo de fechas
